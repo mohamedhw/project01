@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Django-e</title>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+        <!-- Material Design Bootstrap -->
+        <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+        <!-- Your custom styles (optional) -->
+        <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/css1.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        {% comment %} <script src="{% static 'jquery-3.6.0.min.js' %}"></script> {% endcomment %}
+        <script src="https://js.stripe.com/v3/"></script>  <!-- new -->
+        <script src="{% static 'js/main2.js' %}"></script>   <!-- new -->
+        <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+
+    <body>
+        {% include "nav.html" %}
+        <div class="mt-5 pt-4">
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% block content %}
+
+        {% endblock content %}
+        
+
+        <!-- SCRIPTS -->
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="{% static 'js/popper.min.js'%}"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="{% static 'js/bootstrap.min.js'%}"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+        <!-- Initializations -->
+        <script src="{% static "path-to-wow-js/wow.js" %}"></script>
+        <script type="text/javascript">
+            // Animations initialization
+            new WOW().init();
+        </script>
+        <script type="text/javascript" src="{% static 'js/footer.js' %}"></script>
+          <!-- SCRIPTS -->
+    </body>
+
+
+</html>

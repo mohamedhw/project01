@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+  <main class="mt-5 pt-5" style="margin-bottom:135px">
+    <div class="container">
+      <!--Section: Products v.3-->
+      <h2 class="mb-3 pb-2 mt-3">Your Cart</h2>
+        <div class="table-responsive">
+            <table class="table">
+                  <thead>
+                    <tr>
+                      {% comment %} <th class="col-lg-1" scope="col">#</th> {% endcomment %}
+                      <th scope="col">pic</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">quantity</th>
+                      <th scope="col">price</th>
+                      <th scope="col">total</th>
+                    </tr>
+                  </thead>
+                    {% for order_item in object.items.all %}
+                        <tr>
+                            {% comment %} <th scope="row">{{ forloop.counter }}</th> {% endcomment %}
+                            <td>
+                              <a href="{% url "store:detail" order_item.item.pk%}">
+                                <img style="height:140px;width:99px;" src="{{ order_item.item.image.url }}">
+                              </a>
+                            </td>
+                            <td>
+                              <a href="{% url "store:detail" order_item.item.pk%}">
+                                {{ order_item.item.title }}</td>
+                              </a>
+                            <td>
+                              <a href="{% url 'store:remove_one_item' order_item.item.pk %}"><i class="fas fa-minus-circle"></i></a>
+                              {{ order_item.quantity }}
+                              <a href="{% url 'store:add_to_cart' order_item.item.pk %}"><i class="fas fa-plus-circle"></i></a>
+                            </td>
+                            {% if order_item.item.discount_price %}
+                                <td>${{ order_item.item.discount_price }}</td>
+                                <td>${{ order_item.get_total_discount_price }}
+                                  <a style="color:#2196f3" href="{% url 'store:remove_item' order_item.item.pk %}">
+                                    <i class="fas fa-trash float-right"></i>
+                                  </a>
+                                </td>
+                            {% else %}
+                                <td>${{ order_item.item.price }}</td>
+                                <td>${{ order_item.get_total_price }}
+                                
+                                  <a style="color:#2196f3" href="{% url 'store:remove_item' order_item.item.pk %}">
+                                    <i class="fas fa-trash"></i>
+                                  </a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                        {% empty %}
+                        <tr>
+                          <td colspan="4"><b>Your cart is empty</b></td>
+                          <a class="btn btn-primary float-right" href="{% url 'store:home' %}">Continue shopping</a>
+                        </tr>
+                    {% endfor %}
+                    {% if object.get_total %}
+                        <tr> 
+                          <td colspan="4"><b>Total price</b></td>
+                          <td>
+                            <b>${{ object.get_total }}</b>
+                          </td>
+
+                        </tr>
+                        <tr >
+                          <td colspan="5">
+                            <div class="text-center">
+                              <a class="btn btn-warning mx-2 float-right" style="padding:13px;" href="{% url 'store:checkout' %}">Checkout</a>
+                              <a class="btn btn-primary mx-2 float-right" href="{% url 'store:home' %}">Continue shopping</a>
+                            </div>
+                          </td>
+                        </tr>
+                    {% endif %}
+                  </tbody>
+            </table>
+    
+        </div>
+
+    </div>
+  </main>
+  {% include "footer.html" %}
+{% endblock content %}
+
+
+

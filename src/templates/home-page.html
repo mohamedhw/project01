@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+  <main class="mt-5 pt-2">
+    <div class="container">
+      {% include 'categories.html' %}
+      <!--Section: Products v.3-->
+      <section class="text-center mb-4">
+
+        <!--Grid row-->
+        <div class="row wow fadeIn">
+          {% for instance in object_list %}
+
+          <!--Grid column-->
+              <div class="col-lg-3 col-md-6 mb-4">
+                <!--Card-->
+                <div class="card">
+                    <!--Card image-->
+                    <div class="view overlay">
+                      <img src="{{ instance.image.url }}" class="card-img-top"
+                        alt="">
+                      <a href="{% url 'store:detail' instance.pk %}">
+                        <div class="mask rgba-white-slight"></div>
+                      </a>
+                    </div>
+                    <!--Card image-->
+
+                    <!--Card content-->
+                    <div class="card-body text-center">
+                      <!--Category & Title-->
+                      <a href="{% url 'store:detail' instance.pk %}" class="grey-text">
+                        <h5>{{ instance.category }}</h5>
+                      </a>
+                      <h5>
+                        <strong>
+                          <a href="{% url 'store:detail' instance.pk %}" class="dark-grey-text">{{instance.title}}
+                          </a>
+                          {% if instance.label == "sale" %}
+                          <a href="{% url 'store:sale' %}">
+                            <span class="badge badge-pill danger-color">{{ instance.label }}</span>
+                          </a>
+                          {% elif instance.label == "new" %}
+                          <a href="{% url 'store:new' %}">
+                            <span class="badge badge-pill warning-color">{{ instance.label }}</span>
+                          </a>
+                          {% endif %}
+                        </strong>
+                        
+                      </h5>
+                      
+                      <h4 class="font-weight-bold blue-text">
+                        <strong>
+                          {% if instance.discount_price %}
+                            {{instance.discount_price}}$
+                          {% else %}
+                            {{instance.price}}$
+                          {% endif %}
+                        </strong>
+                      </h4>
+
+                    </div>
+                    <!--Card content-->
+                </div>
+                <!--Card-->
+              </div>
+          {% endfor %}
+
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-lg-3 col-md-6 mb-4">
+
+          </div>
+          <!--Fourth column-->
+
+        </div>
+        <!--Grid row-->
+
+      </section>
+      <!--Section: Products v.3-->
+
+      <!--Pagination-->
+
+              <nav class="Page navigation example" style="padding-bottom: 80px">
+                <ul class="pagination pg-blue justify-content-center">
+
+                  <!--Arrow left-->
+                  {% if is_paginated %}
+                    <ul class="pagination pg-blue">
+                      {% if page_obj.has_previous %}
+                        <li class="page-item">
+                          <a class="btn btn-outline-info btn-sm mb-4 pg-lin" href="?page=1">
+                            <span>&laquo;</span>
+                          </a>
+                        </li>
+                        <li class="page-item">
+                          <a class="btn btn-outline-info btn-sm mb-4 pg-lin" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        </li>
+                      {% endif %}
+
+                      {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                          <li class="page-item">
+                            <a class="btn btn-info btn-sm mb-4 pg-lin" href="?page={{ num }}">{{ num }}</a>
+                          </li>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                          <li class="page-item">
+                            <a class="btn btn-outline-info btn-sm mb-4 pg-lin" href="?page={{ num }}">{{ num }}</a>
+                          </li>
+                        {% endif %}
+                      {% endfor %}
+
+                      {% if page_obj.has_next %}
+                      <li class="page-item">
+                        <a class="btn btn-outline-info btn-sm mb-4 pg-lin" href="?page={{ page_obj.next_page_number }}">Next</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="btn btn-outline-info btn-sm mb-4 pg-lin" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+                      </li>
+                      {% endif %}
+                    </ul>
+                  {% endif %}
+                </ul>
+              </nav>
+
+      <!--Pagination-->
+      {% include "footer.html"%}
+    </div>
+  </main>
+  {% comment %} {% include "footer.html" %} {% endcomment %}
+{% endblock content %}

@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+
+    <!-- Navbar brand -->
+    <span class="navbar-brand">Filter By:</span>
+
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+      aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="basicExampleNav">
+
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto">
+          <ul>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'store:home' %}">All
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'store:shirt' %}">Shirts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'store:sport' %}">Sport wears</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'store:outwear' %}">Outwears</a>
+            </li>
+          </ul>
+          <ul>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'store:outwear' %}"> on sale</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'store:outwear' %}">new</a>
+            </li>
+          </ul>
+      </ul>
+    </div>
+    <!-- Collapsible content -->
+
+  </nav>

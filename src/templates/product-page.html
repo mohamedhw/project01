@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+  <!--Main layout-->
+  <main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+          <a href="{{ item.image.url }}">
+            <img src="{{ item.image.url }}" class="img-fluid" alt="">
+          </a>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <!--Content-->
+          <div class="p-4">
+
+            <div class="mb-3">
+              {% if item.category == "shirt" %}
+                <a href="{% url 'store:shirt' %}">
+                  <span class="badge purple mr-1">{{ item.category }}</span>
+                </a>
+              {% elif item.category == "sport" %}
+                <a href="{% url 'store:shirt' %}">
+                  <span class="badge purple mr-1">{{ item.category }}</span>
+                </a>
+              {% elif item.category == "outwears" %}
+                <a href="{% url 'store:shirt' %}">
+                  <span class="badge purple mr-1">{{ item.category }}</span>
+                </a>
+              {% endif %}
+            </div>
+            {% if item.discount_price %}
+              <p class="lead">
+                <span class="mr-1">
+                  <del>${{ item.price }}</del>
+                </span>
+                <span>${{ item.discount_price }}</span>
+              </p>
+            {% else %}
+              <p class="lead">
+                <span>${{ item.price }}</span>
+              </p>
+            {% endif %}
+            <p class="lead font-weight-bold">Description</p>
+
+            <p class="mb-5">{{ item.description }}</p>
+
+            <!-- <form class="d-flex justify-content-left">
+              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
+              <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
+                <i class="fas fa-shopping-cart ml-1"></i>
+              </button>
+
+            </form> -->
+            <div class="row">
+              <a href="{{ item.get_add_to_cart_url }}">
+                <button class="btn btn-primary btn-md my-0 p m-1" >Add to cart
+                  <i class="fas fa-shopping-cart ml-1"></i>
+                </button>
+              </a>
+              <a href="{% url 'store:remove_item' item.pk %}">
+                <button class="btn btn-danger btn-md my-0 p m-1" >Remove from cart
+                  <i class="fas fa-shopping-cart ml-1"></i>
+                </button>
+              </a>
+              {% if request.user.is_authenticated %}
+                {% if post == True %}
+                  <button id='save-button' class="btn btn-info btn-md my-0 p m-1">
+                    wished
+                    <i class="fas fa-shopping-cart ml-1"></i>
+                  </button>
+                {% else %}
+                  <button id='save-button' class="btn btn-info btn-md my-0 p m-1">
+                    wish
+                    <i class="fas fa-shopping-cart ml-1"></i>
+                  </button>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+          <!--Content-->
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <hr>
+
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 text-center mb-5">
+
+          <h4 class="my-4 h4">Additional information</h4>
+
+          <p>{{ item.info }}</p>
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <!--Grid row-->
+      
+      {% comment %} <div class="row wow fadeIn" style="margin-bottom: 100px">
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-12 mb-5">
+          <a href="{{ item.image_2.url }}">
+            <img src="{{ item.image_2.url }}" class="img-fluid" alt="">
+          </a>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-5">
+          <a href="{{ item.image_3.url }}">
+            <img src="{{ item.image_3.url }}" class="img-fluid" alt="">
+          </a>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <a href="{{ item.image_4.url }}">
+            <img src="{{ item.image_4.url }}" class="img-fluid" alt="">
+          </a>
+        </div>
+        <!--Grid column-->
+      </div> {% endcomment %}
+      <!--Grid row-->
+      </hr>
+      <h1 style="margin:50px; font-weight:bolder">Related:</h1>
+      <div class="row">
+        
+        {% for instance in related %}
+        <!--Grid column-->
+          <div class="col-lg-4 col-md-6 mb-5">
+            <a href="{% url 'store:detail' instance.pk %}">
+              <img src="{{ instance.image.url }}" class="img-fluid" alt="">
+            </a>
+          </div>
+          <!--Grid column-->
+        {% endfor %}
+      <div>
+
+    </div>
+  </main>
+  {% include "footer.html" %}
+  <script>
+    var a = "{{post}}";
+    $(document).ready(function(){
+      $("#save-button").on('click',function(e){
+        {% comment %} e.preventDefault(); {% endcomment %}
+        $.ajax({
+          type : 'POST',
+          url : "{% url 'store:save' item.pk %}",
+          data : {
+            posted: $('#save-button').val(),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+          },
+          success: function(response) {
+            console.log(a);
+            console.log(typeof a);
+            if (a === "True") {
+              console.log(a);
+              console.log(typeof a);
+              $("#save-button").html("wished <i class='fas fa-shopping-cart ml-1'></i>");
+            } else {
+              console.log(a);
+              console.log(typeof a);
+              $("#save-button").html("wish <i class='fas fa-shopping-cart ml-1'></i>");
+            }
+            location.reload();
+
+            },
+              error: function (xhr, errmsg, err){
+
+            }
+          });
+      })
+    })
+  </script>
+{% endblock content %}

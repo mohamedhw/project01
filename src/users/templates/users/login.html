@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+<h1 style="margin-top:110px; margin-left: 300px; font-weight:bolder">Login</h1>
+<div class="container pt-4 mt-3" style="margin-bottom: 355px">
+    <form method="POST"> {% csrf_token %}
+        <div class="form-row">
+            <div class="mb-3 col-md-6">
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% include "footer.html" %}
+{% endblock %}

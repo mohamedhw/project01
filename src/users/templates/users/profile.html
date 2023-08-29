@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+<h1 style="margin-top:110px; margin-left: 400px; font-weight:bolder">Profile</h1>
+<div class="container pt-4 mt-3" style="margin-bottom: 151px">
+    <form method="POST"> {% csrf_token %}
+        <div class="form-row">
+            <div class="mb-3 col-md-6">
+                {{ u_form|crispy }}
+                {{ p_form|crispy }}
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% include "footer.html" %}
+{% endblock %}

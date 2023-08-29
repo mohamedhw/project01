@@ -1,0 +1,38 @@
+
+
+
+#id_country {
+    background-color: #fff;
+    height: calc(1.5em + .75rem + 2px);
+    width: 330px;
+    padding: .375rem .75rem;
+    color: #495057;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.footer--body
+{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+
+
+.svg-inline--fa.fa-w-14 {
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.nav-item {
+    display:  inline-block;
+}
+
+.pg-lin {
+    padding-left: 13px !important;
+    padding-right: 13px !important;
+}
